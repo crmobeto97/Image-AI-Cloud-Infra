@@ -9,9 +9,7 @@ resource "aws_vpc_endpoint" "s3" {
   # )
   tags = merge(
   {
-      Name        = "${var.environment}-s3-endpoint",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-s3-endpoint"
   },
   var.tags
   )
@@ -28,9 +26,7 @@ resource "aws_vpc_endpoint" "secrets_manager" {
   # )
   tags = merge(
   {
-      Name        = "${var.environment}-secrets-manager-endpoint",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-secrets-manager-endpoint"
   },
   var.tags
   )
@@ -47,9 +43,7 @@ resource "aws_vpc_endpoint" "cloudwatch_logs" {
   # )
   tags = merge(
   {
-      Name        = "${var.environment}-cloudwatch-endpoint",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-cloudwatch-endpoint"
   },
   var.tags
   )

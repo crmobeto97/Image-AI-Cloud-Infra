@@ -7,9 +7,7 @@ resource "aws_subnet" "public" {
 
   tags = merge(
     {
-      Name        = "${var.environment}-public-subnet-${count.index}",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-public-subnet-${count.index}"
     },
     var.tags
   )
@@ -29,9 +27,7 @@ resource "aws_subnet" "db" {
 
   tags = merge(
     {
-      Name        = "${var.environment}-db-subnet-${count.index}",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-db-subnet-${count.index}"
     },
     var.tags
   )

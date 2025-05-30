@@ -65,9 +65,11 @@ Tecnologies used in the project (including cloud platform)
             For run the application inside the terminal run:
 
             ```bash
-            cd infra/vpc
+            cd ../realtime
             terraform init
-            terraform plan  -var-file=../../vars/0-dev/vpc.tfvars
+            terraform workspace new dev
+            terraform workspace select dev
+            terraform plan  -var-file=./vars/0-dev/terraform.tfvars
             ```
 
         *   For non interactive run

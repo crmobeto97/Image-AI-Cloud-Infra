@@ -2,9 +2,22 @@ provider "aws" {
   region = var.region
 }
 
-module "vpc" {
-  source                             = "../../modules/vpc"
+locals {
+  resolved_environment = lookup(var.environment_names, terraform.workspace, "unknown")
+
+  tags = merge({
+    environment = local.resolved_environment
+  }, var.static_tags)
+  
+  resource_prefix = "${var.static_tags["application"]}-${terraform.workspace}"
+  
+}
+
+module "network" {
+  source                             = "./modules/network"
   region                             = var.region
+  resource_prefix                    = local.resource_prefix
+  tags                               = local.tags
   vpc_cidr_block                     = var.vpc_cidr_block
   instance_tenancy                   = var.instance_tenancy
   enable_dns_support                 = var.enable_dns_support
@@ -43,8 +56,4 @@ module "vpc" {
   egress_db_nacl_to_port             = var.egress_db_nacl_to_port
   egress_db_nacl_protocol            = var.egress_db_nacl_protocol
   egress_db_nacl_cidr_block          = var.egress_db_nacl_cidr_block
-  owner                              = var.owner
-  environment                        = var.environment
-  project                            = var.project
-  application                        = var.application
 }

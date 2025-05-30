@@ -26,9 +26,7 @@ resource "aws_network_acl" "public" {
     }
     tags = merge(
     {
-        Name        = "${var.environment}-public-subnet-nacl",
-        Environment = var.environment,
-        Owner       = var.owner
+        Name        = "${var.resource_prefix}-public-subnet-nacl"
     },
     var.tags
     )
@@ -62,9 +60,7 @@ resource "aws_network_acl" "db" {
     }
     tags = merge(
     {
-        Name        = "${var.environment}-db-subnet-nacl",
-        Environment = var.environment,
-        Owner       = var.owner
+        Name        = "${var.resource_prefix}-db-subnet-nacl"
     },
     var.tags
     )

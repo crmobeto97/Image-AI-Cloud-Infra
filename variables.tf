@@ -1,9 +1,19 @@
-# Common Variables
+### Global Variables ###
 
-variable "tags" {
+variable "environment_names" {
+  type = map(string)
+  default = {
+    dev  = "development"
+    qa   = "quality-assurance"
+    stg  = "staging"
+    prod = "production"
+  }
+}
+
+variable "static_tags" {
   default     = {}
   type        = map(string)
-  description = "Extra tags to attach to the VPC resources"
+  description = "static tags for rresources"
 }
 
 variable "region" {
@@ -11,7 +21,7 @@ variable "region" {
   description = "Region of the VPC"
 }
 
-# VPC Variables
+### VPC ###
 
 variable "vpc_cidr_block" {
   type        = string
@@ -38,26 +48,6 @@ variable "availability_zones" {
 variable "create_nat_gateway" {
   type        = bool
   description = "whether to create a NAT gateway or not"
-}
-
-variable "owner" {
-  type        = string
-  description = "Name of owner"
-}
-
-variable "environment" {
-  type        = string
-  description = "The environment name for the resources."
-}
-
-variable "project" {
-  type        = string
-  description = "The project name"
-}
-
-variable "application" {
-  type        = string
-  description = "the application name"
 }
 
 variable "instance_tenancy" {

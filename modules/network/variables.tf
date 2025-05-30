@@ -11,6 +11,12 @@ variable "region" {
   description = "Region of the VPC"
 }
 
+variable "resource_prefix" {
+  description = "Prefix used to name resources according to the selected workspace"
+  type        = string
+}
+
+
 # VPC Variables
 
 variable "vpc_cidr_block" {
@@ -38,26 +44,6 @@ variable "availability_zones" {
 variable "create_nat_gateway" {
   type        = bool
   description = "whether to create a NAT gateway or not"
-}
-
-variable "owner" {
-  type        = string
-  description = "Name of owner"
-}
-
-variable "environment" {
-  type        = string
-  description = "The environment name for the resources."
-}
-
-variable "project" {
-  type        = string
-  description = "The project name for the resources."
-}
-
-variable "application" {
-  type        = string
-  description = "the application name"
 }
 
 variable "instance_tenancy" {

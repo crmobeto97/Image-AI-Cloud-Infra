@@ -3,9 +3,7 @@ resource "aws_route_table" "public" {
 
   tags = merge(
     {
-      Name        = "${var.environment}-public-route-table",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-public-route-table"
     },
     var.tags
   )
@@ -22,9 +20,7 @@ resource "aws_route_table" "db" {
 
   tags = merge(
     {
-      Name        = "${var.environment}--db-route-table",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}--db-route-table"
     },
     var.tags
   )

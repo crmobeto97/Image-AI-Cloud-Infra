@@ -11,9 +11,7 @@ resource "aws_nat_gateway" "main" {
 
   tags = merge(
     {
-      Name        = "${var.environment}-nat-gateway",
-      Environment = var.environment,
-      Owner       = var.owner
+      Name        = "${var.resource_prefix}-nat-gateway"
     },
     var.tags
   )

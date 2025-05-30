@@ -6,10 +6,7 @@ resource "aws_vpc" "main" {
 
   tags = merge(
     {
-      Name        = "${var.application}-${var.environment}-vpc",
-      Environment = var.environment,
-      Owner       = var.owner
-      Project     = var.project
+      Name = "${var.resource_prefix}-vpc"
     },
     var.tags
   )
