@@ -3,13 +3,14 @@ provider "aws" {
 }
 
 locals {
-  resolved_environment = lookup(var.environment_names, terraform.workspace, "unknown")
+  resolved_environment    = lookup(var.environment_names, terraform.workspace, "unknown")
 
-  tags = merge({
-    environment = local.resolved_environment
+  tags                    = merge({
+    environment             = local.resolved_environment
   }, var.static_tags)
   
-  resource_prefix = "${var.static_tags["application"]}-${terraform.workspace}"
+  resource_prefix         = "${var.static_tags["application"]}-${terraform.workspace}"
+  user_data                = templatefile("${path.module}/tf_templates/userdata.sh", {})
   
 }
 
@@ -56,4 +57,20 @@ module "network" {
   egress_db_nacl_to_port             = var.egress_db_nacl_to_port
   egress_db_nacl_protocol            = var.egress_db_nacl_protocol
   egress_db_nacl_cidr_block          = var.egress_db_nacl_cidr_block
+}
+
+module "compute" {
+  source                             = "./modules/compute"
+  region                             = var.region
+  availability_zones                 = var.availability_zones
+  resource_prefix                    = local.resource_prefix
+  tags                               = local.tags
+  instance_type                      = var.instance_type
+  iam_instance_profile               = var.iam_instance_profile
+  key_name                           = var.key_name
+  private_ip                         = var.private_ip
+  public_subnet_ids                  = module.network.public_subnet_ids
+  # vpc_security_group_ids             = 
+  user_data                          = local.user_data
+  volume_size_1                      = var.volume_size_1
 }

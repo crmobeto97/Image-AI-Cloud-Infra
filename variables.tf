@@ -21,6 +21,11 @@ variable "region" {
   description = "Region of the VPC"
 }
 
+variable "availability_zones" {
+  type        = list(any)
+  description = "List of availability zones"
+}
+
 ### VPC ###
 
 variable "vpc_cidr_block" {
@@ -40,10 +45,6 @@ variable "db_subnet_cidr_blocks" {
   description = "List of Database subnet CIDR blocks"
 }
 
-variable "availability_zones" {
-  type        = list(any)
-  description = "List of availability zones"
-}
 
 variable "create_nat_gateway" {
   type        = bool
@@ -213,4 +214,36 @@ variable "egress_db_nacl_protocol" {
 variable "egress_db_nacl_cidr_block" {
   type        = list(string)
   description = "List of db nacl egress cidr block "
+}
+
+
+### EC2 ####
+
+#### EBS Variables ####
+
+variable "volume_size_1" {
+    description = "Storage size for EBS Volume 1 "
+    type        = number
+}
+
+#### Instances Variables ####
+
+variable "instance_type" {
+  description   = "Instances compute type"
+  type          = string
+}
+
+variable "iam_instance_profile" {
+  description   = "instances iam role (instances permisions)"
+  type          = string
+}
+
+variable "key_name" {
+  description   = "The Key Pair for ssh Instanaces access"
+  type          = string
+}
+
+variable "private_ip" {
+  description   = "private ip"
+  type          = string
 }
