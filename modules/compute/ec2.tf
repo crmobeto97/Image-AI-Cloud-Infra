@@ -35,7 +35,7 @@ resource "aws_instance" "insatnces_1" {
   #availability_zone    = var.availability_zones[1]
   private_ip               = var.private_ip
   subnet_id                = element(var.public_subnet_ids, 0) # Example, select first subnet
-  #vpc_security_group_ids   =
+  vpc_security_group_ids   = var.security_groups_ids
   
   # Internal config ##
   user_data                = var.user_data

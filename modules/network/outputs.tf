@@ -18,3 +18,8 @@ output "cidr_block" {
   value       = var.vpc_cidr_block
   description = "The CIDR block associated with the VPC"
 }
+
+output "security_groups_ids" {
+  value       = [aws_security_group.sg_1.id]
+  description = "Security Groups IDs"
+}

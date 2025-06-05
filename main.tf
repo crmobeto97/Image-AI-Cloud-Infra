@@ -70,7 +70,7 @@ module "compute" {
   key_name                           = var.key_name
   private_ip                         = var.private_ip
   public_subnet_ids                  = module.network.public_subnet_ids
-  # vpc_security_group_ids             = 
+  security_groups_ids                = module.network.security_groups_ids
   user_data                          = local.user_data
   volume_size_1                      = var.volume_size_1
 }

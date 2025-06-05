@@ -70,6 +70,7 @@ Tecnologies used in the project (including cloud platform)
             terraform workspace new dev
             terraform workspace select dev
             terraform plan  -var-file=./vars/0-dev/terraform.tfvars
+            terraform apply --auto-approve  -var-file=./vars/0-dev/terraform.tfvars
             ```
 
         *   For non interactive run

@@ -57,6 +57,11 @@ variable "public_subnet_ids" {
  description    = "IDs of the subnets"
 }
 
+variable "security_groups_ids" {
+ type           = list(string)
+ description    = "IDs of Security Groups"
+}
+
 variable "user_data" {
   description   = "command run ec2 when 1st start"
 }

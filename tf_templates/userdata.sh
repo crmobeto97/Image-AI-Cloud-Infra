@@ -1,12 +1,14 @@
 #!/bin/bash
 
 # initializa instances
-
+export DEBIAN_FRONTEND=noninteractive
+# Start time
+echo "Start time: $(date "+%H:%M:%S")" > ~/start_time.txt
 # Maximum number of attempts
 max_attempts=10
 
 # Timeout in seconds between each attempt
-timeout=60
+timeout=1
 
 # Command to execute
 command="sudo apt-get -y update"
@@ -31,21 +33,23 @@ do
 done
 
 sudo apt-get -y upgrade
-sleep 60
+sleep $timeout
 
 # from https://docs.aws.amazon.com/es_es/systems-manager/latest/userguide/agent-install-ubuntu-64-snap.html
 sudo snap install amazon-ssm-agent --classic
 sudo snap list amazon-ssm-agent
 sudo snap start amazon-ssm-agent
 sudo snap services amazon-ssm-agent
-sleep 30
+sleep $timeout
 
 sudo apt  install -y docker.io 
-sleep 30
+sleep $timeout
 sudo usermod -aG docker ubuntu
+newgrp docker
 # docker run hello-world
-sleep 10
-
+sleep $timeout
+sudo su
+su ubuntu
 # docker network
 cd ~
 git clone https://github.com/crmobeto97/Image-AI-Backend.git
@@ -55,9 +59,20 @@ bash create_docker_network.sh
 echo "Done!"
 
 # Backend
-cd ../src/
+cd ~/Image-AI-Backend/src/
 docker build . -t python-1
-docker run --rm -d --name=backend -p 8000:8000 python-1
+### Run model in local volume/host ###
+cd ia_model/
+git clone https://github.com/pjreddie/darknet
+cd darknet
+#### make dependencies ####
+apt install -y make build-essential
+#### finish make dependencies ####
+make
+wget https://data.pjreddie.com/files/yolov3.weights
+# Run container
+# docker run --rm -d --name=backend -p 8000:8000 python-1
+docker run --rm -d --name=backend -p 8000:8000 -v $(pwd):"/home/ia_model/darknet" python-1
 
 # Front-End
 cd ~
@@ -86,3 +101,6 @@ echo ".env file created successfully with public IP: $PUBLIC_IP"
 
 docker build . -t node-1
 docker run --rm -d --name="front-end" -p 3000:3000 node-1
+
+# End time
+echo "End time: $(date "+%H:%M:%S")" > ~/end_time.txt
